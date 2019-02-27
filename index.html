@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Library System</title>
+    <link rel="stylesheet" type="text/css" href="public/CSS/style.css">
+</head>
+<body>
+
+<div class="menu">
+     <h1><font color="#CC0000">T</font><font color="#DA0E0E">h</font><font color="#E81C1C">e</font> <font color="#F62A2A">L</font><font color="#FF3838">i</font><font color="#FF462A">b</font><font color="#FF5538">r</font><font color="#FF632A">a</font><font color="#FF7138">r</font><font color="#FF7F2A">y</font> <font color="#FF8D38">S</font><font color="#FF9B2A">y</font><font color="#FF8D38">s</font><font color="#FF9B2A">t</font><font color="#FF8D38">e</font><font color="#FF9B2A">m</font></h1>
+    <ul>
+        <li><a href="index.html" data-hover="all_books">Books</a></li>
+        <li><a href="users.html" data-hover="all_users">Users</a></li>
+        <li><a href="genres.html" data-hover="genres">Genres</a></li>
+        <li><a href="rental.html" data-hover="rental">Rental</a></li>
+    </ul>
+</div>
+
+<h2>All Books</h>
+<div class = "books">
+<table class = "table_book">
+    <thead>
+    <tr>
+<th>ID</th>
+<th>ISBN</th>
+<th>Title</th>
+<th>Author</th>
+<th>Genres</th>
+</tr></thead>
+<tbody>
+<tr>
+    <td>1</td>
+    <td>9780547928227</td>
+    <td>The Hobbit</td>
+    <td>J. R. R. Tolkien</td>
+    <td>Fantasy</td>
+</tr>
+<tr>
+    <td>2</td>
+    <td>9780553103540</td>
+    <td>A Game of Thrones</td>
+    <td>George R. R. Martin</td>
+    <td>Game</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="addb">
+    <h>Add new book to the library: </h>
+     <form action="http://flip3.engr.oregonstate.edu:1023/insert_book" method="get">
+        <fieldset>
+    <label for="ISBN">ISBN:</label>
+    <input type="text" name="ISBN" /></br>
+    <label for="bname">Book name:</label>
+    <input type="text" name="bname" /></br>
+    <div id="add"><label for="auname">Author name:</label>
+    <input type="text" name="auname" />
+    <span class="adds" id="adds">+</span></div>
+    <input type="submit" value="add new book" />
+ </fieldset>
+</form>
+</br></br></br>
+    <h>Add new author to the library: </h>
+    <form action="http://flip3.engr.oregonstate.edu:1023/insert_author" method="get">
+        <fieldset>
+    <label for="aname">Name: </label>
+    <input type="text" name="aname" /></br>
+    <label for="bookid">Book ID:</label>
+    <input type="text" name="bookid" /></br>
+    <input type="submit" value="add new author" /></fieldset></form>
+
+</br></br></br>
+    <h>Delete book from library </h>
+    <form action="http://flip3.engr.oregonstate.edu:9298/delete_book" method="get">
+    <fieldset>
+    <label for="bookid">Book ID:</label>
+    <input type="text" name="bookid" /></br>
+    <input type="submit" value="Delete book" />
+</fieldset></form>
+</div>
+
+
+
+
+
+
+
+<div class="bot"></div>
+<script src="public/js/library.js"></script>
+</body>
+</html>

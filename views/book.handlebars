@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+	<title>Library System</title>
+	<link rel="stylesheet" type="text/css" href="/static/CSS/style.css">
+</head>
+<body>
+
+{{#each foo}}
+{{this}}
+{{/each}}
+<div class = "books">
+<table class = "table_book">
+    <thead>
+    <tr>
+<th>ID</th>
+<th>ISBN</th>
+<th>Title</th>
+<th>Author</th>
+<th>Genres</th>
+</tr></thead>
+<tbody>
+	{{#each book}} 
+<tr>
+    <td>{{isbn}}</td> 
+    <td>{{btitle}}</td> 
+    <td>{{author}}</td> 
+    <td>{{genres}}</td>
+</tr>
+{{/each}} 
+</tbody>
+</table>
+</div>
+
+<div class="addb">
+    <h>Add new book to the library: </h>
+     <form action="/book" method="post">
+        <fieldset>
+    <label for="isbn">ISBN:</label>
+    <input type="text" name="isbn" /></br>
+    <label for="btitle">Book name:</label>
+    <input type="text" name="btitle" /></br>
+    <div id="add"><label for="author">Author name:</label>
+    <input type="text" name="author" />
+    <span class="adds" id="adds">+</span></div>
+    <input type="submit" value="add new book" />
+ </fieldset>
+</form>
+</br></br></br>
+
+    <h>Add new author to the library: </h>
+    <form action="/insert_author" method="get">
+        <fieldset>
+    <label for="aname">Name: </label>
+    <input type="text" name="aname" /></br>
+    <label for="bookid">Book ID:</label>
+    <input type="text" name="bookid" /></br>
+    <input type="submit" value="add new author" /></fieldset></form>
+
+</br></br></br>
+    <h>Delete book from library </h>
+    <form action="/delete_book" method="get">
+    <fieldset>
+    <label for="bookid">Book ID:</label>
+    <input type="text" name="bookid" /></br>
+    <input type="submit" value="Delete book" />
+</fieldset></form>
+</div>
+
+
+
+
+
+<div class="bot"></div>
+<script src="/static/js/library.js"></script>
+	{{{body}}}
+</body>
+</html>

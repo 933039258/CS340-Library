@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Library System</title>
+    <link rel="stylesheet" type="text/css" href="public/CSS/genres.css">
+</head>
+<body>
+<div class="menu">
+     <h1><font color="#CC0000">T</font><font color="#DA0E0E">h</font><font color="#E81C1C">e</font> <font color="#F62A2A">L</font><font color="#FF3838">i</font><font color="#FF462A">b</font><font color="#FF5538">r</font><font color="#FF632A">a</font><font color="#FF7138">r</font><font color="#FF7F2A">y</font> <font color="#FF8D38">S</font><font color="#FF9B2A">y</font><font color="#FF8D38">s</font><font color="#FF9B2A">t</font><font color="#FF8D38">e</font><font color="#FF9B2A">m</font></h1>
+    <ul>
+        <li><a href="index.html" data-hover="all_books">Books</a></li>
+        <li><a href="users.html" data-hover="all_users">Users</a></li>
+        <li><a href="genres.html" data-hover="genres">Genres</a></li>
+        <li><a href="rental.html" data-hover="rental">Rental</a></li>
+    </ul>
+</div>
+
+<h2>Genres</h>
+<div class = "genres">
+<table class = "table_genre">
+    <thead>
+    <tr>
+<th>ID</th>
+<th>Name</th>
+</tr></thead>
+<tbody>
+<tr>
+    <td>1</td>
+    <td>Fantasy</td>
+</tr>
+<tr>
+    <td>2</td>
+    <td>Game</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="addg">
+    <h>Add new genre to the library: </h>
+     <form action="library" method="get">
+        <fieldset>
+    <label for="bookid">Book ID:</label>
+    <input type="text" name="bookid" /></br>
+    <div id="addgs"><label for="gname">Genre Name:</label>
+    <input type="text" name="gname" />
+    <span class="addsg" id="addsg">+</span></div>
+    <input type="submit" value="add new genre" />
+</fieldset>
+</form>
+</div>
+
+<div class="bot"></div>
+<script src="public/js/genre.js"></script>
+</body>
+</html>
