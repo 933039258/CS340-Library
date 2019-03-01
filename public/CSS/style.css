@@ -59,20 +59,19 @@ h1{
   margin-top:0px;
 }
 h2{margin-top:2%;
-  margin-left:38%;
+    margin-left: 10%;
+  
 }
 thead{
   background-color: #FE7B35; 
 }
 .books{
-   position: absolute;
    height:100%;
-   width:50%;
-   left:18%;
-   top:20%;
+   top:10%;
+   margin-left: 10%;
 }
 .table_book{
-   width:100%;
+   width:50%;
    background-color: #f1f1f1;
 }
 .books th{
@@ -98,17 +97,6 @@ fieldset{
     width: 150px;
     vertical-align: top;
 }
-
-.bot{
-  position:absolute;
-  background: rgba(0,0,0,0.8); 
-  width:100%;
-  height:30%;
-  left:0px;
-  top:85%;
-  margin-top:50px;
-
-}
 .addb{
    background-color: #f1f1f1;
    position:absolute;
@@ -122,11 +110,13 @@ fieldset{
    border-style: none;
    border-width: 1px; 
    
+   
 
 }
 ul{
   list-style:none;
 }
+
 .adds{
   cursor:pointer;
   position:relative;

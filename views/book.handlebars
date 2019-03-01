@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
 <head>
-	<title>Library System</title>
+	
 	<link rel="stylesheet" type="text/css" href="/static/CSS/style.css">
 </head>
 <body>
 
+
+<h2>All Books</h2>
 {{#each foo}}
 {{this}}
 {{/each}}
@@ -20,12 +22,13 @@
 <th>Genres</th>
 </tr></thead>
 <tbody>
-	{{#each book}} 
+	{{#each books}} 
 <tr>
+    <td>{{id}}</td>
     <td>{{isbn}}</td> 
-    <td>{{btitle}}</td> 
+    <td>{{title}}</td> 
     <td>{{author}}</td> 
-    <td>{{genres}}</td>
+    <td>{{genre}}</td>
 </tr>
 {{/each}} 
 </tbody>
@@ -49,19 +52,19 @@
 </br></br></br>
 
     <h>Add new author to the library: </h>
-    <form action="/insert_author" method="get">
+    <form action="/book/insert_author" method="post">
         <fieldset>
     <label for="aname">Name: </label>
     <input type="text" name="aname" /></br>
-    <label for="bookid">Book ID:</label>
+    <label for="bookid">Book ISBN:</label>
     <input type="text" name="bookid" /></br>
     <input type="submit" value="add new author" /></fieldset></form>
 
 </br></br></br>
     <h>Delete book from library </h>
-    <form action="/delete_book" method="get">
+    <form action="/book/delete_book" method="post">
     <fieldset>
-    <label for="bookid">Book ID:</label>
+    <label for="bookid">Book ISBN:</label>
     <input type="text" name="bookid" /></br>
     <input type="submit" value="Delete book" />
 </fieldset></form>
@@ -71,8 +74,7 @@
 
 
 
-<div class="bot"></div>
+
 <script src="/static/js/library.js"></script>
-	{{{body}}}
 </body>
 </html>

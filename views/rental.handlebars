@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="/static/CSS/rental.css">
+</head>
+<body>
+{{#each foo}}
+{{this}}
+{{/each}}
+
+<h2>Checked out books</h>
+<div class = "checked">
+<table class = "table_checked">
+    <thead>
+    <tr>
+<th>Book ID</th>
+<th>Book title</th>
+<th>Author name</th>
+<th>Genre name</th>
+<th>ISBN</th>
+</tr></thead>
+<tbody>
+{{#each rental}} 
+
+<tr>
+    <td>{{id}}</td>
+    <td>{{title}}</td>
+    <td>{{author}}</td>
+    <td>{{genre}}</td>
+     <td>{{isbn}}</td>
+
+</tr>
+{{/each}}
+</tbody>
+</table>
+</div>
+<div class="rental">
+    <h>Add new rental to the library: </h>
+     <form action="library" method="get">
+        <fieldset>
+    <label for="userid">User ID:</label>
+    <input type="text" name="userid" /></br>
+    <label for="bookid">Book ID:</label>
+    <input type="text" name="bookid" /></br>
+    <label for="rdate">Rental date:</label>
+    <input type="date" name="rdate" /></br>
+    <label for="rtime">Rental Time:</label>
+    <input type="time" value="00:00"/></br>
+    <input type="submit" value="new rental" />
+</fieldset></form>
+
+</body>
+</html>

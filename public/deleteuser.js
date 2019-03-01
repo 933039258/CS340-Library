@@ -1,7 +1,7 @@
-function deleteBook(id){
+function deleteUser(id){
     console.log("delete!!!!");
     $.ajax({
-        url: '/book/' + id,
+        url: '/users/' + id,
         type: 'DELETE',
         success: function(result){
             window.location.reload(true);

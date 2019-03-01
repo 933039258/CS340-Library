@@ -9,15 +9,17 @@ app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
-app.set('port', 7610);
+app.set('port', 8081);
 app.set('mysql', mysql);
 
 app.use('/book',require('./book.js'))
+app.use('/users',require('./users.js'));
+app.use('/genres',require('./genres.js'));
+app.use('/rental',require('./rental.js'));
 
-app.get('/',function(req,res){
-    res.sendfile('index.html') ;
-    console.log('main page is required ');
-}) ;
+app.use(function(req,res){
+res.render("index",{"title":"test","layout":"main"});
+});
 
 app.use(function(req,res){
 res.status(404);

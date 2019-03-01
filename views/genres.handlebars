@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="/static/CSS/genres.css">
+</head>
+<body>
+{{#each foo}}
+{{this}}
+{{/each}}
+
+<h2>All Genres</h>
+<div class = "genres">
+<table class = "table_genre">
+    <thead>
+    <tr>
+<th>Genres ID</th>
+<th>Name</th>
+<th>ISBN</th>
+<th>Books</th>
+</tr></thead>
+<tbody>
+{{#each genres}} 
+
+<tr>
+    <td>{{id}}</td>
+    <td>{{name}}</td>
+     <td>{{isbn}}</td>
+    <td>{{title}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+</div>
+<div class="addg">
+    <h>Add new genre to the library: </h>
+     <form action="library" method="get">
+        <fieldset>
+    <label for="bisbn">Book ISBN:</label>
+    <input type="text" name="bisbn" /></br>
+    <div id="addgs"><label for="gname">Genre Name:</label>
+    <input type="text" name="gname" />
+    <span class="addsg" id="addsg">+</span></div>
+    <input type="submit" value="add new genre" />
+</fieldset>
+</form>
+</div>
+
+<script src="static/js/genre.js"></script>
+</body>
+</html>
