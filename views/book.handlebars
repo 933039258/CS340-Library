@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
-	
+
 	<link rel="stylesheet" type="text/css" href="/static/CSS/style.css">
 </head>
 <body>
 
 
-<h2>All Books</h2>
+<h2>All Books (click book ISBN or book Title can update the book detail)</h2>
 {{#each foo}}
 {{this}}
 {{/each}}
@@ -22,15 +22,19 @@
 <th>Genres</th>
 </tr></thead>
 <tbody>
-	{{#each books}} 
+	{{#each books}}
 <tr>
     <td>{{id}}</td>
-    <td>{{isbn}}</td> 
-    <td>{{title}}</td> 
-    <td>{{author}}</td> 
-    <td>{{genre}}</td>
+    <td><a href="/book/detail/{{isbn}}">{{isbn}}</a></td>
+    <td><a href="/book/detail/{{isbn}}">{{title}}</a></td>
+    <td>
+        {{#each authors}}<span class="i-item">{{this}}</span>{{/each}}
+    </td>
+    <td>
+        {{#each genres}}<span class="i-item">{{this}}</span>{{/each}}
+    </td>
 </tr>
-{{/each}} 
+{{/each}}
 </tbody>
 </table>
 </div>
@@ -43,9 +47,16 @@
     <input type="text" name="isbn" /></br>
     <label for="btitle">Book name:</label>
     <input type="text" name="btitle" /></br>
-    <div id="add"><label for="author">Author name:</label>
-    <input type="text" name="author" />
-    <span class="adds" id="adds">+</span></div>
+    <div id="author-add">
+        <label for="aname[]">Author name:</label>
+        <input type="text" name="aname[]" />
+        <span class="adds" id="author-adds">+</span>
+    </div>
+    <div id="genre-add">
+        <label for="gname[]">Genre name:</label>
+        <input type="text" name="gname[]"/>
+        <span class="adds" id="genre-adds">+</span>
+    </div>
     <input type="submit" value="add new book" />
  </fieldset>
 </form>
@@ -56,8 +67,8 @@
         <fieldset>
     <label for="aname">Name: </label>
     <input type="text" name="aname" /></br>
-    <label for="bookid">Book ISBN:</label>
-    <input type="text" name="bookid" /></br>
+    <label for="isbn">Book ISBN:</label>
+    <input type="text" name="isbn" /></br>
     <input type="submit" value="add new author" /></fieldset></form>
 
 </br></br></br>

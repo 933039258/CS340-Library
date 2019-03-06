@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+
+	<link rel="stylesheet" type="text/css" href="/static/CSS/style.css">
+</head>
+<body>
+
+
+<h2>Book Detail</h2>
+
+<div class = "books">
+    <table class = "table_book">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genres</th>
+        </tr></thead>
+        <tbody>
+            <tr>
+                <td>{{book.id}}</td>
+                <td>{{book.isbn}}</td>
+                <td>{{book.title}}</td>
+                <td>
+                    {{#each book.authors}}<span class="i-item">{{this}}</span>{{/each}}
+                </td>
+                <td>
+                    {{#each book.genres}}<span class="i-item">{{this}}</span>{{/each}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="addb">
+
+    <h>Modify book info: </h>
+    <form action="/book/detail/{{book.isbn}}" method="post">
+        <fieldset>
+            <h4>Info</h4>
+            <label for="btitle">Book name:</label>
+            <input type="text" name="btitle" value="{{book.title}}"/></br>
+
+            <h4>Authors</h4>
+            <div id="author-add">
+                {{#each book.authors}}
+                    <label for="aname[]">Author name:</label>
+                    <input type="text" name="aname[]" value="{{this}}" />
+                {{/each}}
+                <span class="adds" id="author-adds">+</span>
+            </div>
+
+            <h4>Genres</h4>
+            <div id="genre-add">
+                {{#each book.genres}}
+                    <label for="gname[]">Genre name:</label>
+                    <input type="text" name="gname[]" value="{{this}}" />
+                {{/each}}
+                <span class="adds" id="genre-adds">+</span>
+            </div>
+            <input type="submit" value="modify book" />
+        </fieldset>
+    </form>
+
+</br></br></br>
+    <h>Delete book from library </h>
+    <form action="/book/delete_book" method="post">
+    <fieldset>
+    <input type="text" name="bookid" value="{{book.isbn}}" hidden /></br>
+    <input type="submit" value="Delete book" />
+</fieldset></form>
+</div>
+
+
+
+
+
+
+<script src="/static/js/library.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	
+
 	<link rel="stylesheet" type="text/css" href="/static/CSS/rental.css">
 </head>
 <body>
@@ -21,14 +21,18 @@
 <th>ISBN</th>
 </tr></thead>
 <tbody>
-{{#each rental}} 
+{{#each rental}}
 
 <tr>
     <td>{{id}}</td>
     <td>{{title}}</td>
-    <td>{{author}}</td>
-    <td>{{genre}}</td>
-     <td>{{isbn}}</td>
+    <td>
+        {{#each authors}}<span class="i-item">{{this}}</span>{{/each}}
+    </td>
+    <td>
+        {{#each genres}}<span class="i-item">{{this}}</span>{{/each}}
+    </td>
+    <td>{{isbn}}</td>
 
 </tr>
 {{/each}}
@@ -37,18 +41,30 @@
 </div>
 <div class="rental">
     <h>Add new rental to the library: </h>
-     <form action="library" method="get">
+    <form action="/rental/out" method="post">
         <fieldset>
-    <label for="userid">User ID:</label>
-    <input type="text" name="userid" /></br>
-    <label for="bookid">Book ID:</label>
-    <input type="text" name="bookid" /></br>
-    <label for="rdate">Rental date:</label>
-    <input type="date" name="rdate" /></br>
-    <label for="rtime">Rental Time:</label>
-    <input type="time" value="00:00"/></br>
-    <input type="submit" value="new rental" />
-</fieldset></form>
+            <label for="userid">User ID:</label>
+            <input type="text" name="userid"/></br>
+            <label for="bookid">Book ID:</label>
+            <input type="text" name="bookid"/></br>
+            <label for="rtime">Rental time:</label>
+            <input type="datetime-local" name="rtime"/></br>
+
+            <input type="submit" value="new rental"/>
+        </fieldset>
+    </form>
+
+    <h>Return book to the library: </h>
+    <form action="/rental/in" method="post">
+        <fieldset>
+            <label for="bookid">Book ID:</label>
+            <input type="text" name="bookid"/></br>
+            <label for="rtime">Return time:</label>
+            <input type="datetime-local" name="rtime"/></br>
+
+            <input type="submit" value="return"/>
+        </fieldset>
+    </form>
 
 </body>
 </html>
