@@ -14,30 +14,29 @@
                 -- If not, add the relationship
 
 
-INSERT INTO books (isbn, title) VALUES
-        (#isbn_input, #title_input);
+INSERT INTO books (isbn, title) VALUES (:isbnInput, :titleInput);
 
 
-IF NOT EXISTS (SELECT id FROM authors WHERE name = #author_input) INSERT INTO authors (name) VALUES #author_input;
+IF NOT EXISTS (SELECT id FROM authors WHERE name = :authorInput) INSERT INTO authors (name) VALUES :authorInput;
 
 
 IF NOT EXISTS (SELECT (isbn, author_id) FROM books_authors WHERE
-        (isbn = #isbn_input) AND
+        (isbn = :isbnInput) AND
 (author_id =
-(SELECT id FROM authors WHERE #author_input = name)))
+(SELECT id FROM authors WHERE :authorInput = name)))
 INSERT INTO books_authors (isbn, author_id) VALUES
-(#isbn_input,
-(SELECT id FROM authors WHERE #author_input = name));
+(:isbnInput,
+(SELECT id FROM authors WHERE :authorInput = name));
 
 
-IF NOT EXISTS (SELECT name FROM genres WHERE (name = #genre_input)
-        INSERT INTO genres (name) VALUES #genre_input;
+IF NOT EXISTS (SELECT name FROM genres WHERE (name = :genreInput)
+        INSERT INTO genres (name) VALUES :genreInput;
 
 
 IF NOT EXISTS (SELECT (isbn, genre_id) FROM books_genres WHERE
-(isbn = #isbn_input) AND (genre_id =
-(SELECT id FROM genres WHERE name = #genre_input AS gid)))
-INSERT INTO books_genres VALUES (#isbn_input, gid);
+(isbn = :isbnInput) AND (genre_id =
+(SELECT id FROM genres WHERE name = :genreInput AS gid)))
+INSERT INTO books_genres VALUES (:isbnInput, gid);
 
 
 ________________
@@ -47,45 +46,45 @@ ________________
         -- Recycles code from “add a new book”
 
 
-IF NOT EXISTS (SELECT id FROM authors WHERE name = #author_input) INSERT INTO authors (name) VALUES #author_input;
+IF NOT EXISTS (SELECT id FROM authors WHERE name = :authorInput) INSERT INTO authors (name) VALUES :authorInput;
 
 
 -- Add new genre to the library
         -- Recycles code from “add a new book”
 
 
-IF NOT EXISTS (SELECT name FROM genres WHERE (name = #genre_input)
-        INSERT INTO genres VALUES #genre_input;
+IF NOT EXISTS (SELECT name FROM genres WHERE (name = :genreInput)
+        INSERT INTO genres VALUES :genreInput;
 
 
 -- Add author to a book
         -- Recycles code from “add a new book”
 
 
-IF NOT EXISTS (SELECT id FROM authors WHERE name = #author_input) INSERT INTO authors (name) VALUES #author_input;
+IF NOT EXISTS (SELECT id FROM authors WHERE name = :authorInput) INSERT INTO authors (name) VALUES :authorInput;
 
 
 IF NOT EXISTS (SELECT (isbn, author_id) FROM books_authors WHERE
-        (isbn = #isbn_input) AND
+        (isbn = :isbnInput) AND
 (author_id =
-(SELECT id FROM authors WHERE #author_input = name))
+(SELECT id FROM authors WHERE :authorInput = name))
 INSERT INTO books_authors (isbn, author_id) VALUES
-(#isbn_input,
-(SELECT id FROM authors WHERE #author_input = name));
+(:isbnInput,
+(SELECT id FROM authors WHERE :authorInput = name));
 
 
 -- Add genre to a book
         -- Recycles code from “add a new book”
 
 
-IF NOT EXISTS (SELECT name FROM genres WHERE (name = #genre_input)
-        INSERT INTO genres (name) VALUES #genre_input;
+IF NOT EXISTS (SELECT name FROM genres WHERE (name = :genreInput)
+        INSERT INTO genres (name) VALUES :genreInput;
 
 
 IF NOT EXISTS (SELECT (isbn, genre_id) FROM books_genres WHERE
-(isbn = #isbn_input) AND (genre_id =
-(SELECT id FROM genres WHERE name = #genre_input AS gid)))
-INSERT INTO books_genres VALUES (#isbn_input, gid);
+(isbn = :isbnInput) AND (genre_id =
+(SELECT id FROM genres WHERE name = :genreInput AS gid)))
+INSERT INTO books_genres VALUES (:isbnInput, gid);
 
 
 ________________
@@ -97,20 +96,20 @@ ________________
 
 
 IF EXISTS (SELECT id FROM rentals WHERE
-        (book_id = #book_id_input) AND (user_id = #user_id_input))
+        (book_id = :book_idInput) AND (user_id = :user_idInput))
         DELETE FROM rentals WHERE
-(book_id = #book_id_input) ;
+(book_id = :book_idInput) ;
 
 
-IF EXISTS (SELECT id FROM books WHERE (id = #book_id_input)
-        DELETE FROM books WHERE (id = #book_id_input);
+IF EXISTS (SELECT id FROM books WHERE (id = :book_idInput)
+        DELETE FROM books WHERE (id = :book_idInput);
 
 
 -- Add user to the the library
 
 
 INSERT INTO users (fname, lname, join_date)
-        VALUES (#fname_input, #lname_input, #join_date_input);
+        VALUES (:fnameInput, :lnameInput, :join_dateInput);
 
 
 -- Delete user from the library
@@ -121,9 +120,9 @@ INSERT INTO users (fname, lname, join_date)
                         -- If not, deletes the user
 
 
-IF EXISTS (SELECT id FROM users WHERE (id = #id_input))
-        IF NOT EXISTS (SELECT * FROM rentals WHERE user_id = #id_input)
-        DELETE FROM users WHERE (id = #id_input);
+IF EXISTS (SELECT id FROM users WHERE (id = :idInput))
+        IF NOT EXISTS (SELECT * FROM rentals WHERE user_id = :idInput)
+        DELETE FROM users WHERE (id = :idInput);
 
 
 ________________
@@ -138,13 +137,13 @@ ________________
                                 -- If not, creates the rental
 
 
-IF EXISTS (SELECT id FROM books WHERE (id = #book_id_input))
+IF EXISTS (SELECT id FROM books WHERE (id = :book_idInput))
 IF EXISTS (SELECT id FROM users WHERE
-(id = #user_id_input))
+(id = :user_idInput))
 IF NOT EXISTS (SELECT id FROM rentals WHERE
-        (book_id = #book_id_input)
+        (book_id = :book_idInput)
 INSERT INTO rentals (book_id, user_id, date_out) VALUES
-        (#book_id_input, #user_id_input, #date_out_input);
+        (:book_idInput, :user_idInput, :date_outInput);
 
 
 -- Return book to the library
@@ -153,11 +152,11 @@ INSERT INTO rentals (book_id, user_id, date_out) VALUES
 
 
 IF EXISTS (SELECT id FROM rentals WHERE
-        (rentals.book_id = #book_id_input) AND
-        (rentals.user_id = #user_id_input))
-        UPDATE rentals SET (date_in = #date_in_input)
-WHERE (rentals.book_id = #book_id_input) AND
-(rentals.user_id = #user_id_input);
+        (rentals.book_id = :book_idInput) AND
+        (rentals.user_id = :user_idInput))
+        UPDATE rentals SET (date_in = :date_inInput)
+WHERE (rentals.book_id = :book_idInput) AND
+(rentals.user_id = :user_idInput);
 
 
 -- Display all users in the library
