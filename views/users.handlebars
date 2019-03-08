@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="/static/CSS/userstyle.css">
+</head>
+<body>
+{{#each foo}}
+{{this}}
+{{/each}}
+
+<h2>All Users</h>
+<div class = "users">
+<table class = "table_user">
+    <thead>
+    <tr>
+<th>ID</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Date Join</th>
+</tr></thead>
+<tbody>
+{{#each users}} 
+
+<tr>
+    <td>{{id}}</td>
+    <td>{{fname}}</td> 
+    <td>{{lname}}</td> 
+    <td>{{join_date}}</td> 
+</tr>
+{{/each}}
+</tbody>
+</table>
+</div>
+<div class="addu">
+    <h>Add new user to the library: </h>
+     <form action="/users" method="post">
+<fieldset>
+    <label for="fname">First Name:</label>
+    <input type="text" name="fname" /></br>
+    <label for="lname">Last Name:</label>
+    <input type="text" name="lname" /></br>
+    <label for="jdate">Join date:</label>
+    <input type="date" name="jdate" /></br>
+    <input type="submit" value="add new user" />
+
+</fieldset>
+</form>
+</br></br></br>
+ <h>Delete user from library </h>
+    <form action="/users/delete_user" method="post">
+    <fieldset>
+    <label for="userid">User ID:</label>
+    <input type="text" name="userid" /></br>
+    <input type="submit" value="Delete User" />
+</fieldset></form>
+</div>
+
+</body>
+</html>

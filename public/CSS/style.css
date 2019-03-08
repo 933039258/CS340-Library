@@ -2,13 +2,13 @@ html,body{
     height:100%;
     margin: 0;
 }
-.menu { 
-    background: rgba(0,0,0,0.8); 
-    height: 7%; 
-    line-height: 32px; 
+.menu {
+    background: rgba(0,0,0,0.8);
+    height: 7%;
+    line-height: 32px;
     padding-left: 80px;
     margin-top:0px;
-   
+
 }
 
 .menu a{
@@ -16,17 +16,17 @@ html,body{
     height:60px;
 }
 
-.menu li a { 
+.menu li a {
     display: block;
     margin-top:20px;
     height:40px;
     width:80px;
     text-align: :"center";
-    font-size: 25px; 
-    font-family: "Comic Sans MS", sans-serif; 
-    color: #FFF; 
+    font-size: 25px;
+    font-family: "Comic Sans MS", sans-serif;
+    color: #FFF;
     padding: 0 20px;
-    float: bottom; 
+    float: bottom;
 
 }
 .menu li a:hover{
@@ -43,7 +43,7 @@ html,body{
 }
 
 .menu li:nth-child(1){
-    
+
     margin-left:55%;
 }
 .menu li:nth-child(2){
@@ -59,20 +59,19 @@ h1{
   margin-top:0px;
 }
 h2{margin-top:2%;
-  margin-left:38%;
+    margin-left: 10%;
+
 }
 thead{
-  background-color: #FE7B35; 
+  background-color: #FE7B35;
 }
 .books{
-   position: absolute;
    height:100%;
-   width:50%;
-   left:18%;
-   top:20%;
+   top:10%;
+   margin-left: 10%;
 }
 .table_book{
-   width:100%;
+   width:50%;
    background-color: #f1f1f1;
 }
 .books th{
@@ -91,23 +90,12 @@ fieldset{
 }
 
  label{
-    
+
     display: inline-block;
     padding: 3px 6px;
     text-align: right;
     width: 150px;
     vertical-align: top;
-}
-
-.bot{
-  position:absolute;
-  background: rgba(0,0,0,0.8); 
-  width:100%;
-  height:30%;
-  left:0px;
-  top:85%;
-  margin-top:50px;
-
 }
 .addb{
    background-color: #f1f1f1;
@@ -117,16 +105,18 @@ fieldset{
    top:7%;
    right:0px;
    width:23%;
-   
+
    overflow: auto;
    border-style: none;
-   border-width: 1px; 
-   
+   border-width: 1px;
+
+
 
 }
 ul{
   list-style:none;
 }
+
 .adds{
   cursor:pointer;
   position:relative;
@@ -136,3 +126,6 @@ ul{
   border-radius: 3px;
 }
 
+.i-item:not(:first-of-type)::before {
+    content: ', ';
+}
