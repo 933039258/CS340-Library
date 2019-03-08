@@ -113,6 +113,8 @@ module.exports = function(){
         var anames = req.body.aname || [];
         var gnames = req.body.gname || [];
 
+        
+        /* library should allow duplicate books
         try{
             // if the book exists
             var bookResult = await sh.select(
@@ -122,6 +124,8 @@ module.exports = function(){
             if(bookResult.length) {
                 throw new Error(`The book with ISBN "${isbn}" exists`);
             }
+    library should allow duplicate books */
+        
             // add book
             await sh.insert(
                 'INSERT INTO books (isbn, title) VALUES (?,?)',
@@ -189,10 +193,11 @@ module.exports = function(){
         }
     });
 
-    router.post('/detail/:isbn', async function(req, res){
+    router.post('/detail/:id', async function(req, res){
         var mysql = req.app.get('mysql');
         var sh = createSqlHelper(mysql.pool);
-        var isbn = req.params.isbn;
+        var id = req.paramas.id;
+        var isbn = req.body.isbn;
         var title = req.body.btitle;
         var anames = req.body.aname || [];
         var gnames = req.body.gname || [];
@@ -200,16 +205,16 @@ module.exports = function(){
         try{
             // if the book exists
             var bookResult = await sh.select(
-                'SELECT id FROM books WHERE isbn=?',
-                [isbn]
+                'SELECT id FROM books WHERE id=?',
+                [id]
             );
             if(!bookResult.length) {
-                throw new Error(`The book with ISBN "${isbn}" does not exist`);
+                throw new Error(`The book with ID "${id}" does not exist`);
             }
             // modify book
             await sh.update(
-                'UPDATE books SET title=? WHERE isbn=?',
-                [title, isbn]
+                'UPDATE books SET title=? WHERE id=?',
+                [title, id]
             );
 
             // delete authors and re-add
@@ -297,15 +302,17 @@ module.exports = function(){
     router.post('/delete_book', async function(req, res){
         var mysql = req.app.get('mysql');
         var sh = createSqlHelper(mysql.pool);
-        var isbn = [req.body.bookid];
+        var id = [req.body.bookid];
 
         try{
             // delete book authors, genres and rentals
+            /* do not have to do this
             await sh.delete('DELETE FROM books_authors WHERE isbn=?', [isbn]);
             await sh.delete('DELETE FROM books_genres WHERE isbn=?', [isbn]);
-            await sh.delete('DELETE FROM rentals WHERE book_id=(SELECT id from books WHERE isbn=? LIMIT 1)', [isbn]);
+            */
+            await sh.delete('DELETE FROM rentals WHERE book_id=(SELECT id from books WHERE id=? LIMIT 1)', [id]);
             // delete book
-            await sh.delete('DELETE FROM books WHERE isbn=?', [isbn]);
+            await sh.delete('DELETE FROM books WHERE id=?', [id]);
 
             res.redirect('/book');
         }catch(error){
