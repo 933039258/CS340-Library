@@ -114,8 +114,9 @@ module.exports = function(){
         var gnames = req.body.gname || [];
 
         
-        /* library should allow duplicate books
+        
         try{
+            /* library should allow duplicate books
             // if the book exists
             var bookResult = await sh.select(
                 'SELECT id FROM books WHERE isbn=?',
@@ -187,7 +188,7 @@ module.exports = function(){
             }
 
             res.redirect('/book');
-        }catch (error){
+        } catch (error){
             res.write(JSON.stringify(error.toString()));
             res.end();
         }
