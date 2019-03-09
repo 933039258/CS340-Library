@@ -105,14 +105,14 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var sh = createSqlHelper(mysql.pool);
 
-        var gname = req.body.gname;
+        var gname = req.body.gid;
         try{
             await sh.select(
-                'DELETE FROM books_genres WHERE genre_id=(SELECT id from genres WHERE name=? LIMIT 1)',
+                'DELETE FROM books_genres WHERE genre_id=(SELECT id from genres WHERE id=? LIMIT 1)',
                 [gname]
             );
             await sh.select(
-                'DELETE FROM genres WHERE name=?',
+                'DELETE FROM genres WHERE id=?',
                 [gname]
             );
 

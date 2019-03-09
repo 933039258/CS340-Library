@@ -113,15 +113,15 @@ module.exports = function(){
         var anames = req.body.aname || [];
         var gnames = req.body.gname || [];
 
-        
-        
         try{
-            // check if the book exists
+            // if the book exists
             var bookResult = await sh.select(
                 'SELECT id FROM books WHERE isbn=?',
                 [isbn]
             );
-            
+            if(bookResult.length) {
+                throw new Error(`The book with ISBN "${isbn}" exists`);
+            }
             // add book
             await sh.insert(
                 'INSERT INTO books (isbn, title) VALUES (?,?)',
@@ -149,16 +149,10 @@ module.exports = function(){
                     );
                     authorId = authorResult1.insertId;
                 }
-                var authorBookResult = await sh.select(
-                       'SELECT id FROM books_authors WHERE isbn=? AND author_id=?',
-                       [req.body.isbn, authorId]
-                    );
-                if (!authorBookResult.length) {
-                    await sh.insert(
-                        'INSERT INTO books_authors (isbn, author_id) VALUES (?,?)',
-                        [req.body.isbn, authorId]
-                    );
-                };
+                await sh.insert(
+                    'INSERT INTO books_authors (isbn, author_id) VALUES (?,?)',
+                    [req.body.isbn, authorId]
+                );
             }
 
             // add genres
@@ -182,29 +176,23 @@ module.exports = function(){
                     );
                     genreId = genreResult1.insertId;
                 }
-                var genreBookResult = await sh.select(
-                       'SELECT id FROM books_genres WHERE isbn=? AND genre_id=?',
-                       [req.body.isbn, genreId]
-                    );
-                if (!genreBookResult.length) {
-                    await sh.insert(
-                        'INSERT INTO books_genres (isbn, genre_id) VALUES (?,?)',
-                        [req.body.isbn, genreId]
-                    );
+                await sh.insert(
+                    'INSERT INTO books_genres (isbn, genre_id) VALUES (?,?)',
+                    [req.body.isbn, genreId]
+                );
             }
 
             res.redirect('/book');
-        } catch (error){
+        }catch (error){
             res.write(JSON.stringify(error.toString()));
             res.end();
         }
     });
 
-    router.post('/detail/:id', async function(req, res){
+    router.post('/detail/:isbn', async function(req, res){
         var mysql = req.app.get('mysql');
         var sh = createSqlHelper(mysql.pool);
-        var id = req.paramas.id;
-        var isbn = req.body.isbn;
+        var isbn = req.params.isbn;
         var title = req.body.btitle;
         var anames = req.body.aname || [];
         var gnames = req.body.gname || [];
@@ -212,16 +200,16 @@ module.exports = function(){
         try{
             // if the book exists
             var bookResult = await sh.select(
-                'SELECT id FROM books WHERE id=?',
-                [id]
+                'SELECT id FROM books WHERE isbn=?',
+                [isbn]
             );
             if(!bookResult.length) {
-                throw new Error(`The book with ID "${id}" does not exist`);
+                throw new Error(`The book with ISBN "${isbn}" does not exist`);
             }
             // modify book
             await sh.update(
-                'UPDATE books SET title=? WHERE id=?',
-                [title, id]
+                'UPDATE books SET title=? WHERE isbn=?',
+                [title, isbn]
             );
 
             // delete authors and re-add
@@ -280,7 +268,7 @@ module.exports = function(){
                 );
             }
 
-            res.redirect(`/book/detail/${id}`);
+            res.redirect(`/book/detail/${isbn}`);
         }catch (error){
             res.write(JSON.stringify(error.toString()));
             res.end();
@@ -309,18 +297,15 @@ module.exports = function(){
     router.post('/delete_book', async function(req, res){
         var mysql = req.app.get('mysql');
         var sh = createSqlHelper(mysql.pool);
-        var id = [req.body.bookid];
+        var isbn = [req.body.bookid];
 
         try{
             // delete book authors, genres and rentals
-            /* do not have to do this
-            await sh.delete('DELETE FROM books_authors WHERE isbn=?', [isbn]);
-            await sh.delete('DELETE FROM books_genres WHERE isbn=?', [isbn]);
-            */
-            // delete rentals
-            await sh.delete('DELETE FROM rentals WHERE book_id=(SELECT id from books WHERE id=?)', [id]);
+            await sh.delete('DELETE FROM books_authors WHERE isbn=(SELECT isbn from books WHERE id = ? LIMIT 1)', [isbn]);
+            await sh.delete('DELETE FROM books_genres WHERE isbn=(SELECT isbn from books WHERE id = ? LIMIT 1)', [isbn]);
+            await sh.delete('DELETE FROM rentals WHERE book_id=(SELECT id from books WHERE id=? LIMIT 1)', [isbn]);
             // delete book
-            await sh.delete('DELETE FROM books WHERE id=?', [id]);
+            await sh.delete('DELETE FROM books WHERE id=?', [isbn]);
 
             res.redirect('/book');
         }catch(error){
