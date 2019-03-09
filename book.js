@@ -274,7 +274,7 @@ module.exports = function(){
                 );
             }
 
-            res.redirect(`/book/detail/${isbn}`);
+            res.redirect(`/book/detail/${id}`);
         }catch (error){
             res.write(JSON.stringify(error.toString()));
             res.end();
@@ -311,7 +311,8 @@ module.exports = function(){
             await sh.delete('DELETE FROM books_authors WHERE isbn=?', [isbn]);
             await sh.delete('DELETE FROM books_genres WHERE isbn=?', [isbn]);
             */
-            await sh.delete('DELETE FROM rentals WHERE book_id=(SELECT id from books WHERE id=? LIMIT 1)', [id]);
+            // delete rentals
+            await sh.delete('DELETE FROM rentals WHERE book_id=(SELECT id from books WHERE id=?)', [id]);
             // delete book
             await sh.delete('DELETE FROM books WHERE id=?', [id]);
 
