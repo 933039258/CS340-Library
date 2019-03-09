@@ -60,35 +60,6 @@ CREATE TABLE `rentals` (
 
 
 
-
-
-/*
-IMPORTANT
-We need a CHECK constraint for the rentals table that prevents multiple users from renting out the same book. Unfortunately, the version of MariaDB we are using in the course does not support the CHECK constraint. There is a Piazza post about this ('CHECKs and their associated functions not being incorporated on source') that we need to follow. If we cannot use CHECK, then we will not be able to keep historical data on rentals, which means we need to scrap some of our design.
-*/
-
-
-/* One possible solution to lack of checks in MariaDB version:
-DELIMITER $$
--- before inserting new id
-DROP TRIGGER IF EXISTS before_insert_id$$
-CREATE TRIGGER before_insert_id
-    BEFORE INSERT ON test FOR EACH ROW
-    BEGIN
-        -- condition to check
-        IF NEW.id < 0 THEN
-            -- hack to solve absence of SIGNAL/prepared statements in triggers
-            UPDATE `Error: invalid_id_test` SET x=1;
-        END IF;
-    END$$
-
-
-DELIMITER ;
-*/
-
-
-
-
 INSERT INTO books (isbn, title, author) VALUES
 (9780547928227, 'The Hobbit'),
 (9780553103540, 'A Game of Thrones'),
