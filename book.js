@@ -116,17 +116,12 @@ module.exports = function(){
         
         
         try{
-            /* library should allow duplicate books
-            // if the book exists
+            // check if the book exists
             var bookResult = await sh.select(
                 'SELECT id FROM books WHERE isbn=?',
                 [isbn]
             );
-            if(bookResult.length) {
-                throw new Error(`The book with ISBN "${isbn}" exists`);
-            }
-    library should allow duplicate books */
-        
+            
             // add book
             await sh.insert(
                 'INSERT INTO books (isbn, title) VALUES (?,?)',
@@ -154,10 +149,16 @@ module.exports = function(){
                     );
                     authorId = authorResult1.insertId;
                 }
-                await sh.insert(
-                    'INSERT INTO books_authors (isbn, author_id) VALUES (?,?)',
-                    [req.body.isbn, authorId]
-                );
+                var authorBookResult = await sh.select(
+                       'SELECT id FROM books_authors WHERE isbn=? AND author_id=?',
+                       [req.body.isbn, authorId]
+                    );
+                if (!authorBookResult.length) {
+                    await sh.insert(
+                        'INSERT INTO books_authors (isbn, author_id) VALUES (?,?)',
+                        [req.body.isbn, authorId]
+                    );
+                };
             }
 
             // add genres
@@ -181,10 +182,15 @@ module.exports = function(){
                     );
                     genreId = genreResult1.insertId;
                 }
-                await sh.insert(
-                    'INSERT INTO books_genres (isbn, genre_id) VALUES (?,?)',
-                    [req.body.isbn, genreId]
-                );
+                var genreBookResult = await sh.select(
+                       'SELECT id FROM books_genres WHERE isbn=? AND genre_id=?',
+                       [req.body.isbn, genreId]
+                    );
+                if (!genreBookResult.length) {
+                    await sh.insert(
+                        'INSERT INTO books_genres (isbn, genre_id) VALUES (?,?)',
+                        [req.body.isbn, genreId]
+                    );
             }
 
             res.redirect('/book');
